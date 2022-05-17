@@ -2,7 +2,7 @@
 .vscode
 
 **/*.pyc
+env/.env
 
 staticfiles/*
 
-env/.env

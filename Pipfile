@@ -15,6 +15,7 @@ dj-config-url = "*"
 whitenoise = "*"
 django-crispy-forms = "*"
 crispy-bootstrap5 = "*"
+django-filter = "*"
 
 [dev-packages]
 

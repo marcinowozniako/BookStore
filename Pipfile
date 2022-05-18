@@ -16,6 +16,7 @@ whitenoise = "*"
 django-crispy-forms = "*"
 crispy-bootstrap5 = "*"
 django-filter = "*"
+requests = "*"
 
 [dev-packages]
 

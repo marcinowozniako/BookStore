@@ -9,7 +9,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    book_id = models.CharField(max_length=255, unique=True)
+    book_id = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     authors = models.ManyToManyField('Author')
     published_year = models.CharField(max_length=12)

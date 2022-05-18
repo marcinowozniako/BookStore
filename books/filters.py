@@ -4,6 +4,7 @@ from books import models
 
 
 class BookFilter(filters.FilterSet):
+    book_id = filters.CharFilter(lookup_expr='icontains', label='External book_id')
     title = filters.CharFilter(lookup_expr='icontains', label='Title')
     authors = filters.CharFilter(field_name='authors__name', lookup_expr='icontains', label='Authors')
     date_between = django_filters.RangeFilter(
@@ -20,3 +21,8 @@ class BookFilter(filters.FilterSet):
             'date_between',
             'acquired',
         ]
+
+
+class AuthorFilter(filters.FilterSet):
+    model = models.Author
+    authors = filters.CharFilter(field_name='name', lookup_expr='icontains', label='Authors')

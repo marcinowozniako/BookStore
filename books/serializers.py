@@ -32,3 +32,12 @@ class BookSerializerList(BookSerializerBase):
                                            help_text=mark_safe(
                                                f"<a href='{'authors'}'>Add Authors</a>")
                                            )
+
+
+class BookSerializerApiCreate(serializers.ModelSerializer):
+    # authors = serializers.HyperlinkedModelSerializer(many=True)
+    authors = serializers.CharField()
+
+    class Meta:
+        model = Book
+        fields = ('authors',)

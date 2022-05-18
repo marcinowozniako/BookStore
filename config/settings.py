@@ -34,6 +34,7 @@ INTERNAL_IPS = ALLOWED_HOSTS
 # Application definition
 
 INSTALLED_APPS = [
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,8 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'rest_framework',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
     # local
-    'books',
+    'books.apps.BooksConfig',
+
 ]
 
 MIDDLEWARE = [

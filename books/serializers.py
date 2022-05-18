@@ -1,23 +1,34 @@
+from django.urls import reverse_lazy
+from django.utils.safestring import mark_safe
 from rest_framework import serializers
-from books import models
+
+from books.models import Author, Book
 
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Author
+        model = Author
         fields = ('id', 'name')
 
 
-class BookSerializer(serializers.ModelSerializer):
-    authors = serializers.StringRelatedField(many=True)
-    identifiers = serializers.StringRelatedField(many=True)
+class BookSerializerBase(serializers.ModelSerializer):
+    authors = serializers.SlugRelatedField(many=True, slug_field='name', queryset=Author.objects.all())
 
     class Meta:
-        model = models.Book
+        model = Book
         fields = (
+            'id',
             'book_id',
             'title',
             'authors',
-            'published_date',
+            'published_year',
             'acquired',
+            'thumbnail',
         )
+
+
+class BookSerializerList(BookSerializerBase):
+    authors = serializers.SlugRelatedField(many=True, slug_field='name', queryset=Author.objects.all(),
+                                           help_text=mark_safe(
+                                               f"<a href='{'authors'}'>Add Authors</a>")
+                                           )

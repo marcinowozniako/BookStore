@@ -1,7 +1,7 @@
 import django_filters
 import requests
-from django.http import HttpResponse
 from rest_framework import generics
+from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 
@@ -13,6 +13,13 @@ class BookListView(generics.ListCreateAPIView):
     serializer_class = serializers.BookSerializerList
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = filters.BookFilter
+
+    def get_queryset(self):
+        start_date = self.request.query_params.get('from', None)
+        end_date = self.request.query_params.get('to', None)
+        if start_date:
+            qs = models.Book.objects.filter(published_year__range=[int(start_date), int(end_date)])
+            return qs
 
 
 class AuthorView(generics.ListCreateAPIView):
@@ -36,8 +43,8 @@ class ApiImportView(APIView):
 
     def post(self, request):
         authorss = []
-        created_books = []
-        updated_books = []
+        books1 = []
+        books2 = []
         r = requests.get(
             f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.POST['authors']}&maxResults=40")
         if r.status_code == 200:
@@ -78,17 +85,10 @@ class ApiImportView(APIView):
                                 authorss.append(a)
                             books.authors.add(a)
                     if created_b:
-                        created_books.append(books)
-                    if not created_b:
-                        updated_books.append(books)
+                        books1.append(books)
 
-            res = f'<pre>Books created: {len(created_books)}: {[str(x) for x in created_books]}\n' \
-              f'Authors created: {len(authorss)}: {[str(x) for x in authorss]}\n' \
-              f'Books updated: {len(updated_books)}: {[str(x) for x in updated_books]}</pre>'
+            return Response({'imported': len(books1)})
 
-            return HttpResponse(res)
         else:
-            return HttpResponse('No connection with server')
+            return Response({'Error': 'Connection Error'})
 
-# except requests.exceptions.RequestException as err:
-#     return HttpResponse(err)

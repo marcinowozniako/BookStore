@@ -50,19 +50,17 @@ class ApiImportView(APIView):
     throttle_classes = [UserRateThrottle]
 
     def post(self, request):
-        authorss = []
         books1 = []
-        books2 = []
+        updated_books = []
         r = requests.get(
             f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.data['author']}&maxResults=40")
         if r.status_code == 200:
             response = r.json()
             nb = response.get('totalItems')
-            idx = 0
-            while nb >= 0:
+            idx = -40
+            while nb >= 40:
                 idx += 40
                 nb -= 40
-
                 r = requests.get(
                     f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.data['author']}&maxResults=40"
                     f"&startIndex={idx}")
@@ -89,13 +87,13 @@ class ApiImportView(APIView):
                         )
                         for author in book['volumeInfo'].get('authors', ""):
                             a, created_a = models.Author.objects.update_or_create(name=author)
-                            if created_a:
-                                authorss.append(a)
                             books.authors.add(a)
                     if created_b:
                         books1.append(books)
+                    if not created_b:
+                        updated_books.append(books)
 
-            return Response({'imported': len(books1)})
+            return Response({'imported': len(books1), 'updated': len(updated_books)})
 
         else:
             return Response({'Error': 'Connection Error'})

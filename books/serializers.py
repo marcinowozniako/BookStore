@@ -40,4 +40,4 @@ class BookSerializerApiCreate(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('authors',)
+        fields = ('author',)

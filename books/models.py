@@ -12,7 +12,7 @@ class Book(models.Model):
     book_id = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
     authors = models.ManyToManyField('Author', blank=True)
-    published_year = models.CharField(max_length=12, blank=True)
+    published_year = models.CharField(max_length=32, blank=True)
     acquired = models.BooleanField(default=False, blank=True)
     thumbnail = models.URLField(blank=True)
 

@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: latest
+    build:
+      context: .
+    ports:
+      - '8002:8000'
+    container_name: django-rest
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    env_file:
+      - env/.env
+  db:
+    image: postgres:14
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    env_file:
+      - env/.env
+volumes:
+  postgres:

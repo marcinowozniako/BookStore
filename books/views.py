@@ -9,6 +9,10 @@ from books import models, filters, serializers
 
 
 class BookListView(generics.ListCreateAPIView):
+    """
+    Generic class View to show all the books from database with custom filter class
+    and custom queryset for filtering with query parameters and also create new book.
+    """
     queryset = models.Book.objects.all()
     serializer_class = serializers.BookSerializerList
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
@@ -31,6 +35,9 @@ class BookListView(generics.ListCreateAPIView):
 
 
 class AuthorView(generics.ListCreateAPIView):
+    """
+    Generic class View to show all authors, and to create new authors
+    """
     queryset = models.Author.objects.all()
     serializer_class = serializers.AuthorSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
@@ -38,6 +45,10 @@ class AuthorView(generics.ListCreateAPIView):
 
 
 class BookDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Generic class View to show, update details of the book,
+    here you can also delete book from database
+    """
     queryset = models.Book.objects.all()
     serializer_class = serializers.BookSerializerBase
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
@@ -45,6 +56,10 @@ class BookDetailsView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ApiImportView(APIView):
+    """
+    View to import all the books from GoogleApi by given Author Name, add loop to send requests
+    until all books are imported into database, custom json response.
+    """
     queryset = models.Book.objects.all()
     serializer_class = serializers.BookSerializerApiCreate
 

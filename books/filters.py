@@ -6,7 +6,7 @@ from books import models
 class BookFilter(filters.FilterSet):
     book_id = filters.CharFilter(lookup_expr='icontains', label='External book_id')
     title = filters.CharFilter(lookup_expr='icontains', label='Title')
-    authors = filters.CharFilter(field_name='authors__name', lookup_expr='icontains', label='Authors')
+    authors = filters.CharFilter(field_name='authors__name', lookup_expr='icontains', label='Author')
     date = django_filters.RangeFilter(
         field_name='published_year',
         label='Date (Between)',

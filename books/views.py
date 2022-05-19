@@ -17,8 +17,16 @@ class BookListView(generics.ListCreateAPIView):
     def get_queryset(self):
         start_date = self.request.query_params.get('from', None)
         end_date = self.request.query_params.get('to', None)
-        if start_date:
+        author = self.request.query_params.get('author', None)
+        if start_date and end_date and author:
+            qs = models.Book.objects.filter(published_year__range=[int(start_date), int(end_date)],
+                                            authors__name__icontains=author)
+            return qs
+        elif start_date and end_date:
             qs = models.Book.objects.filter(published_year__range=[int(start_date), int(end_date)])
+            return qs
+        elif author:
+            qs = models.Book.objects.filter(authors__name=author)
             return qs
 
 
@@ -91,4 +99,3 @@ class ApiImportView(APIView):
 
         else:
             return Response({'Error': 'Connection Error'})
-

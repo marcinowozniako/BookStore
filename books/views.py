@@ -46,7 +46,7 @@ class ApiImportView(APIView):
         books1 = []
         books2 = []
         r = requests.get(
-            f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.POST['authors']}&maxResults=40")
+            f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.data['author']}&maxResults=40")
         if r.status_code == 200:
             response = r.json()
             nb = response.get('totalItems')
@@ -56,7 +56,7 @@ class ApiImportView(APIView):
                 nb -= 40
 
                 r = requests.get(
-                    f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.POST['authors']}&maxResults=40"
+                    f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{self.request.data['author']}&maxResults=40"
                     f"&startIndex={idx}")
                 response = r.json()
                 for book in response.get('items', ""):

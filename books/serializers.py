@@ -36,7 +36,7 @@ class BookSerializerList(BookSerializerBase):
 
 class BookSerializerApiCreate(serializers.ModelSerializer):
     # authors = serializers.HyperlinkedModelSerializer(many=True)
-    authors = serializers.CharField()
+    author = serializers.CharField()
 
     class Meta:
         model = Book

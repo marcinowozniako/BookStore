@@ -25,6 +25,6 @@
 
   _Method Post for endpoint /books/import require Data Param_
     * **Example of param body data:**  <br />
-    `{ 'author' : 'Tolkien' }`
+    `{ "author" : "Tolkien" }`
 
 * _Link URL for working App:_ https://stxtaskbooks.herokuapp.com/books/ <br />

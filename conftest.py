@@ -2,7 +2,6 @@ import pytest
 from rest_framework.test import APIClient
 
 import books.models
-from books import models
 
 
 @pytest.fixture

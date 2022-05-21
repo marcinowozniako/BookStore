@@ -14,7 +14,7 @@
    _URL params are provided for `/books/` endpoint_
 
     * **all params are optional:**<br />
-      * author=name - provide filtering over authors, can pass many params with author and response list witch all matching authors<br />
+      * author=name - provide filtering over authors<br />
       * from=date&to=date - provide filtering over published date range<br />
       * acquired=true, or false - filter list by the acquired state (if the book is already acquired or not).<br />
       * title=title_of_book,- filter list by the title of the book.<br />
@@ -25,6 +25,6 @@
 
   _Method Post for endpoint /books/import require Data Param_
     * **Example of param body data:**  <br />
-    `{ 'author' : 'Tolkien' }`
+    `{ "author" : "Tolkien" }`
 
 * _Link URL for working App:_ https://stxtaskbooks.herokuapp.com/books/ <br />

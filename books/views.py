@@ -28,6 +28,14 @@ class BookListView(generics.ListCreateAPIView):
         elif start_date and end_date:
             qs = qs.filter(published_year__range=[int(start_date), int(end_date)])
             return qs
+        elif end_date and author:
+            qs = qs.filter(published_year__range=[0, int(end_date)],
+                           authors__name__icontains=author)
+            return qs
+        elif start_date and author:
+            qs = qs.filter(published_year__range=[int(start_date), int(current_year)],
+                           authors__name__icontains=author)
+            return qs
         elif start_date:
             qs = qs.filter(published_year__range=[int(start_date), int(current_year)])
             return qs
